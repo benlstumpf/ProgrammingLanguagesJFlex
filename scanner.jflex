@@ -19,7 +19,8 @@ word          = {letter}+
 whitespace    = [ \n\t]
 digit         = [0-9]
 number        = {digit}+
-
+comment       = [//]{other}*
+blockComment  = [\/\*][^]*[\*\/]
 %%
 /* Lexical Rules */
 
@@ -30,15 +31,24 @@ number        = {digit}+
             }
 
 {whitespace}  {  /* Ignore Whitespace */
-                 return "";
+               return "";
               }
 
 {other}    {
             System.out.println("Illegal char: '" + yytext() + "' found.");
-            // return "";
+            //return "";
            }
+
 {number}   {
           System.out.println("Found a number " +yytext());
           //return( yytext());
+          }
 
+{comment}    {
+            return "";
+
+           }
+
+{blockComment}    {
+          return "";
           }
